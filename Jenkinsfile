@@ -1,37 +1,30 @@
 pipeline {
-   agent none
-	//agent any
-    stages {
-	
-	stage('Non-Parallel Stage') {
-	    agent {
-                        label "principal"
-                }
-        steps {
-                echo 'This stage will be executed first'
-                }
-        }
-
-	
-        stage('Run Tests') {
-            parallel {
-                stage('Test On Windows') {
-                    steps {
-			sleep 10
-                        echo "Task1 on Parallel"
-                    }
-                    
-                }
-                stage('Test On Master') {
-                    agent {
-                        label "principal"
-                    }
-                    steps {
-			    	sleep 10
-				echo "Task2 on Parallel"
-			}
-                }
+    agent any
+    stages { 
+        stage('Git') {
+            steps {
+                echo 'Obteniendo Git'
+                git damegit()
             }
+        }
+        stage('Maven y package'){
+            tools{
+              maven 'LocalMaven'
+              jdk 'LocalJDK'
+            }
+            steps {
+                echo 'Ejecutando Maven PMD CHECKSTYLE Y FINDBUGS. Paquetizando'
+                bat 'mvn clean pmd:pmd checkstyle:checkstyle findbugs:findbugs package'
+            }
+            
+        }
+        stage('Despliegue Tomcat'){
+            steps {
+                echo 'Ejecutando despliegue Tomcat'
+                //copyArtifacts filter: '**/*.war', fingerprintArtifacts: true, projectName: '060-copy-artifact'
+                //deploy adapters: [tomcat8(credentialsId: 'f393c254-f0ea-4063-899b-957a6d24a1cd', path: '', url: 'http://localhost:8081/')], contextPath: null, war: '.\\webapp\\target\\webapp.war'
+            }
+            
         }
     }
 }
