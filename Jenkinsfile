@@ -1,5 +1,4 @@
 pipeline {
-   //agent none
 	agent any
 	parameters {
 	  string (name: 'REPOSITORIO', defaultValue: '', description: '')
@@ -7,7 +6,7 @@ pipeline {
 	stages { 
 		stage('Git') {
 			steps {
-				echo 'Obteniendo Git => ${params.REPOSITORIO}'
+				echo "Obteniendo Git => ${params.REPOSITORIO}"
 				git "${params.REPOSITORIO}"
 			}
 		}
