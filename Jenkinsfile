@@ -7,7 +7,7 @@ pipeline {
 	stages { 
 		stage('Git') {
 			steps {
-				echo 'Obteniendo Git'
+				echo 'Obteniendo Git => ${params.REPOSITORIO}'
 				git "${params.REPOSITORIO}"
 			}
 		}
