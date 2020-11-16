@@ -8,7 +8,7 @@ pipeline {
 		stage('Git') {
 			steps {
 				echo 'Obteniendo Git'
-				git "${params.GIT_URL}"
+				git "${params.REPOSITORIO}"
 			}
 		}
 		stage('Maven y package'){
