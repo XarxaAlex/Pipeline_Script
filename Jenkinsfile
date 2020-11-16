@@ -1,7 +1,7 @@
 pipeline {
 	agent any
 	parameters {
-	  string (name: 'REPOSITORIO', defaultValue: '', description: '')
+	  string (name: 'REPOSITORIO', defaultValue: 'sin valor', description: 'bla bla')
 	}
 	stages { 
 		stage('Git') {
